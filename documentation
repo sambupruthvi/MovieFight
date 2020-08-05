@@ -1,0 +1,2 @@
+Debouncing an input (search for a movie)
+    -waiting for sometime to pass after the last event to actually do something.
