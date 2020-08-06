@@ -1,2 +1,13 @@
 Debouncing an input (search for a movie)
     -waiting for sometime to pass after the last event to actually do something.
+
+Issues to tackle:
+    1) Fix broken images.
+    2) Clear the drop down when user types a new input.
+    3) dropdown menu should clear when user click anywhere outside the dropdown box.
+
+How did we fix issue number 3:
+    every node/element in html is associated with a number $0, $1, $2 etc.,
+    we can check if these elements are present in the document with document.contains($0), it returns true if present else it returns false
+    we can check all the click events and if the click is not contained in rootDiv we can make the dropdown element class in-active.
+    That way whenever a click is made outside the dropdown it can be collapsed.

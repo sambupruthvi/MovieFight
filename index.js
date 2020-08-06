@@ -30,16 +30,42 @@ const wrapper = document.querySelector(".results");
 
 const onInput = async (event) => {
     let movies = await fetchData(event.target.value);
+    if (!movies.length) {
+        dropdown.classList.remove('is-active');
+        return;
+    }
+    wrapper.innerHTML = '';
     dropdown.classList.add('is-active');
     for (const movie of movies) {
         const option = document.createElement('a');
         option.classList.add('dropdown-item');
+        const imgSrc = movie.Poster === 'N/A' ? "" : movie.Poster;
         option.innerHTML = `
             <img src = "${movie.Poster}"/>
             ${movie.Title}
         `;
+        option.addEventListener('click', () => {
+            dropdown.classList.remove('is-active');
+            input.value = movie.Title;
+            onMovieSelect(movie);
+        })
         wrapper.appendChild(option);
     }
 }
 input.addEventListener('input', debounce(onInput, 500));
+document.addEventListener('click', event => {
+    if(!rootDiv.contains(event.target)){
+        dropdown.classList.remove('is-active');
+    }
+});
+
+const onMovieSelect = async (movie) => {
+    const response = await axios.get('http://www.omdbapi.com', {
+        params : {
+            apikey : '1ea45fcc',
+            i : movie.imdbID
+        }
+    })
+    console.log(response.data);
+}
 
